@@ -1,0 +1,122 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @ajamina
+ Sign out
+5
+0 0 CIBCDataStudio/voc-themes Private
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+voc-themes/interface/vocApp/templates/columnGetter.html
+17d920b  a day ago
+@niteshsandal niteshsandal Add files via upload
+
+99 lines (90 sloc)  4 KB
+<!doctype html>
+<html>
+<head>
+<title>ColumnGetter</title>
+</head>
+<body>
+<div>
+    <h1>Upload a File</h1>
+   <!--  function to help hide the select column menu until the form is submitted -->
+    <script type="text/javascript">
+    function showHide() {
+  	var div = document.getElementById("selectColumn");
+    div.style.display = '';
+   }
+    //function to send post request to flask
+   function getSelected (){
+     var select = document.getElementById("selectBox");
+    var out= select.options[select.selectedIndex].text;
+     var form=document.getElementById("the_form");
+     var selectID=document.getElementById("selectID");
+     var act = "/upload" + "?col=" + out + "&id="+  selectID.options[selectID.selectedIndex].text
+     form.action=act;
+   }
+   function showButtons(){
+     document.getElementById('submit').style.visibility='visible';
+     document.getElementById('selectColumn').style.visibility='visible';
+   }
+	</script>
+<!-- form that allows user to upload and submit CSV, show select column menu once it is selected - accepts only CSV  -->
+    <form action="javascript:void(0);" method="post" id="the_form" enctype="multipart/form-data">
+      <input type="file" id="the_file" name="file" required="required" accept=".csv"/>
+      <input type="submit" value="Show Columns" class="btn" onclick= "showButtons()"/>
+      <input type ="submit" id="submit" name="sub" onclick="getSelected()" style ="visibility:hidden"/>
+    </form>
+<!-- hide this div (column menu) until user chooses a CSV and clicks "show columns"-->
+    	<div id="selectColumn" style ="visibility:hidden">
+        	 <p>Select Column</p>
+              <select id="selectBox"></select>
+
+
+          <p> Select Column (ID) </p>
+          <select id="selectID"> </select>
+
+      	</div>
+<!-- this script will parse the first row of the CSV (columns) and return a drop down menu to select the desired column name -->
+<script type="text/javascript">
+ function showColumns(){
+  var file = document.getElementById("the_file").files[0]; // the uploaded CSV file
+  var reader = new FileReader(); // create file reading object
+  reader.onload = function(file) { // once reader reads the csv, parse to retrieve column heading labels and display in dropdown
+  	var rows = file.target.result.split(/[\r\n|\n]+/); // list of rows in csv
+  	headings = rows[0].split(','); // list of headings in first row
+  	var myColumns = document.getElementById("selectColumn"); // div containing column select drop-down menu box
+    if (document.getElementById("selectBox")==null){ // if the selection box doesn't exist yet, define it
+    var select = document.createElement("select"); // selection box element
+    select.setAttribute("id", "selectBox"); // assign id "selectBox" to selection box element
+    select.setAttribute("name","sb")
+  }
+else{
+      var select = document.getElementById("selectBox"); // drop down menu
+      select.innerHTML="";
+  }
+if (document.getElementById("selectID")==null){
+  var selectID= document.createElement("select");
+  selectID.setAttribute("id","selectID")
+}
+else{
+  var selectID=document.getElementById("selectBox");
+  selectID.innerHTML="";
+}
+    for (var s in headings) { // for each heading in array of headings from CSV
+    var option = document.createElement("option"); // create option element in drop down for heading
+    var col = headings[s];
+  //  var optionID=document.createElement("option")
+  //  optionID.text=col;
+  //  optionID.value=String(col);
+    option.text = col; // text displayed (heading name)
+    option.value = String(col);
+     // add column name option to selection box
+//  myColumns.appendChild(select); // add selection box to selectionBox div in HTML
+    select.appendChild(option);
+  //myColumns.appendChild(selectID);
+}
+var selectID= document.getElementById("selectID")
+selectID.innerHTML=select.innerHTML
+};
+  reader.readAsText(file); // read the CSV file as text once it is loaded by the reader
+}
+ document.getElementById('the_form').addEventListener('submit', showColumns, false); // call function when form is submitted
+</script>
+</div>
+</body>
+</html>
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About

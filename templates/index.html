@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../static/fitness.ico">
+
+    <title>Workout Tracker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/workout-app.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Workout Tracker</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://docs.google.com/spreadsheets/d/1a0nyqylrE0b8fIsrr04Q7b24F0CtDMoZEqhBpWhUmTM/edit#gid=0" target="_blank">Google Sheet Tracker</a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+
+      <div class="starter-template">
+        <h1>Workout Tracker</h1>
+        <p class="lead">Start adding workouts here.</p>
+
+      <script>
+      function showVideo(){
+      var vid = document.getElementById("linkShown");
+      vid.style.display='';
+
+      }
+      function getLink(){
+      var linkText = document.getElementById("link").value; // link entered
+      var linkName = document.getElementById("vidName").value; // optional name provided
+      if (linkName==""){
+        linkName=linkText
+      }
+      var linkForm = linkText.slice(0, linkText.indexOf("/?"))+"/embed/captioned"; // formatted link to satisfy iframe input requirements
+      var linkDiv=document.getElementById("linkShown");
+      linkDiv.setAttribute("src", linkForm);
+      var workoutDiv=document.createElement("div"); // clickable div that reveals workout video when clicked
+      workoutDiv.innerHTML=linkName;
+      document.body.appendChild(workoutDiv);
+      workoutDiv.setAttribute("onClick", "showVideo()");
+      workoutDiv.style.cursor="pointer";
+
+    }
+
+
+      </script>
+<div style="padding-top:20px">
+         <input type="text" id="link" placeholder="Enter media link:" name="mediaLink"/>
+         <input type="text" id="vidName" placeholder="Media name (optional)"/>
+         <button onclick="getLink()">Submit</button>
+       </div>
+<!-- https://www.instagram.com/p/BgJrx9hlwUd -->
+<!-- make media title optional (add if to JS) hide caption? (optional - included by default) -->
+
+
+ <iframe id="linkShown" align="right" width="auto" height="1000" frameborder="0" scrolling="no" allowtransparency="true" style="display:none"></iframe>
+      </div>
+
+      <!-- reveal iframe when dynamically generated div is clicked -->
+
+<!-- make sure to account for all different forms of the instagram post links in the linkForm...  -->
+
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../static/bootstrap/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../static/bootstrap/assets/js/vendor/popper.min.js"></script>
+    <script src="../static/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
